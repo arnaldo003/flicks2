@@ -1,0 +1,28 @@
+name: Scrape
+
+on:
+  schedule:
+    - cron: "0 */8 * * *"  # Every 8 hours
+  workflow_dispatch:
+
+jobs:
+  scrape-latest:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.8'  # Specify the desired Python version
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Run Flicks Scraper
+        run: python main.py
+
+      - name: Run lakewood
+        run: python lakewoodranch.py
